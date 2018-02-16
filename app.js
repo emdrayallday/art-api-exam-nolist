@@ -5,7 +5,12 @@ const bodyParser = require('body-parser')
 const HTTPError = require('node-http-error')
 const port = process.env.PORT || 4000
 const { not, isEmpty } = require('ramda')
-const { addPainting, getPainting, updatePainting } = require('./dal.js')
+const {
+  addPainting,
+  getPainting,
+  updatePainting,
+  deletePainting
+} = require('./dal.js')
 const checkFields = require('./lib/required-fields.js')
 const cleanObj = require('./lib/removing-extra-fields.js')
 const cleaner = cleanObj([
@@ -83,6 +88,12 @@ app.put('/paintings/:id', (req, res, next) => {
       .then(newPainting => res.send(newPainting))
       .catch(err => next(new HTTPError(err.status, err.message)))
   }
+})
+
+app.delete('/paintings/:id', (req, res, next) => {
+  deletePainting(req.params.id)
+    .then(delResult => res.send(delResult))
+    .catch(err => next(new HTTPError(err.status, err.message)))
 })
 
 app.use((err, req, res, next) => {
