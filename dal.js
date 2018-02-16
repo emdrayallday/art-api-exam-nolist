@@ -10,7 +10,7 @@ const idCleaner = require('./lib/id-cleaner.js')
 
 const addPainting = painting => {
   painting._id = `painting_${slug(idCleaner(painting.name), { lower: true })}`
-  painting.type = 'painting_'
+  painting.type = 'painting'
   return db.put(painting)
 }
 
