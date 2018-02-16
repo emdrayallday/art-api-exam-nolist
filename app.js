@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const HTTPError = require('node-http-error')
 const port = process.env.PORT || 4000
 const { not, isEmpty } = require('ramda')
-const { addPainting, getPainting } = require('./dal.js')
+const { addPainting, getPainting, updatePainting } = require('./dal.js')
 const checkFields = require('./lib/required-fields.js')
 const cleanObj = require('./lib/removing-extra-fields.js')
 const cleaner = cleanObj([
@@ -15,7 +15,25 @@ const cleaner = cleanObj([
   'yearCreated',
   'museum'
 ])
+const cleanerUpdate = cleanObj([
+  '_id',
+  '_rev',
+  'name',
+  'movement',
+  'artist',
+  'yearCreated',
+  'museum'
+])
 const requiredFields = checkFields([
+  'name',
+  'movement',
+  'artist',
+  'yearCreated',
+  'museum'
+])
+const requiredFieldsUpdate = checkFields([
+  '_id',
+  '_rev',
   'name',
   'movement',
   'artist',
@@ -37,6 +55,7 @@ app.post('/paintings', (req, res, next) => {
         `You are missing the required fields: ${requiredFields(req.body)}`
       )
     )
+    return
   } else {
     addPainting(cleaner(req.body))
       .then(newPainting => res.send(newPainting))
@@ -45,14 +64,28 @@ app.post('/paintings', (req, res, next) => {
 })
 
 app.get('/paintings/:id', (req, res, next) => {
-  console.log(req.params.id)
   getPainting(req.params.id)
     .then(painting => res.send(painting))
     .catch(err => next(new HTTPError(err.status, err.message)))
 })
 
+app.put('/paintings/:id', (req, res, next) => {
+  if (not(isEmpty(requiredFieldsUpdate(req.body)))) {
+    next(
+      new HTTPError(
+        400,
+        `You are missing the required fields: ${requiredFields(req.body)}`
+      )
+    )
+    return
+  } else {
+    return updatePainting(cleanerUpdate(req.body))
+      .then(newPainting => res.send(newPainting))
+      .catch(err => next(new HTTPError(err.status, err.message)))
+  }
+})
+
 app.use((err, req, res, next) => {
-  console.log(err)
   res.status(err.status).send(err.message)
 })
 

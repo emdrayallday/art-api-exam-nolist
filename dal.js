@@ -14,4 +14,5 @@ const addPainting = painting => {
   return db.put(painting)
 }
 const getPainting = id => db.get(id)
-module.exports = { addPainting, getPainting }
+const updatePainting = painting => db.put(painting)
+module.exports = { addPainting, getPainting, updatePainting }
