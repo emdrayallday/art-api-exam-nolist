@@ -4,7 +4,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const HTTPError = require('node-http-error')
 const port = process.env.PORT || 4000
-const { not, isEmpty } = require('ramda')
+const { not, isEmpty, pathOr } = require('ramda')
 const {
   addPainting,
   addArtist,
@@ -56,13 +56,25 @@ app.get('/', function(req, res, next) {
 ///////// Paintings
 ////////////////////////////
 app.get('/paintings', (req, res, next) => {
-  allDocs({
-    include_docs: true,
-    startkey: 'painting',
-    endkey: 'painting\ufff0'
-  })
-    .then(paintings => res.send(paintings))
-    .catch(err => next(new HTTPError(err.status, err.message)))
+  if (pathOr(null, ['query', 'limit'], req)) {
+    return allDocs({
+      include_docs: true,
+      startkey: 'painting',
+      endkey: 'painting\ufff0',
+      limit: req.query.limit
+    })
+      .then(paintings => res.send(paintings))
+      .catch(err => next(new HTTPError(err.status, err.message)))
+  } else {
+    return allDocs({
+      include_docs: true,
+      startkey: 'painting',
+      endkey: 'painting\ufff0',
+      limit: 5
+    })
+      .then(paintings => res.send(paintings))
+      .catch(err => next(new HTTPError(err.status, err.message)))
+  }
 })
 
 app.post('/paintings', (req, res, next) => {
@@ -114,9 +126,26 @@ app.delete('/paintings/:id', (req, res, next) => {
 /////////////////////////////////
 
 app.get('/artists', (req, res, next) => {
-  allDocs({ include_docs: true, startkey: 'artist', endkey: 'artist\ufff0' })
-    .then(artists => res.send(artists))
-    .catch(err => next(new HTTPError(err.status, err.message)))
+  if (pathOr(null, ['query', 'limit'], req)) {
+    console.log(req.query.limit)
+    return allDocs({
+      include_docs: true,
+      startkey: 'artist',
+      endkey: 'artist\ufff0',
+      limit: req.query.limit
+    })
+      .then(artists => res.send(artists))
+      .catch(err => next(new HTTPError(err.status, err.message)))
+  } else {
+    return allDocs({
+      include_docs: true,
+      startkey: 'artist',
+      endkey: 'artist\ufff0',
+      limit: 5
+    })
+      .then(artists => res.send(artists))
+      .catch(err => next(new HTTPError(err.status, err.message)))
+  }
 })
 
 app.post('/artists', (req, res, next) => {
