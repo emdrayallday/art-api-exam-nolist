@@ -6,11 +6,11 @@ const db = new PouchDB(process.env.COUCHDB_URL)
 const slug = require('slugify')
 const { pluck, prop } = require('ramda')
 
-const idCleaner = require('./lib/id-cleaner.js')
+const idGen = require('./lib/pk-gen.js')
 
 const addPainting = painting => {
-  painting._id = `painting_${slug(idCleaner(painting.name), { lower: true })}`
   painting.type = 'painting'
+  painting._id = `${painting.type}_${idGen(painting.name)}`
   return db.put(painting)
 }
 const getPainting = id => db.get(id)
