@@ -12,7 +12,12 @@ const {
   updateDoc,
   deleteDoc
 } = require('./dal.js')
-const checkFields = require('./lib/required-fields.js')
+const {
+  addPaintingCheck,
+  updatePaintingCheck,
+  addArtistCheck,
+  updateArtistCheck
+} = require('./lib/required-fields.js')
 const cleanObj = require('./lib/removing-extra-fields.js')
 const cleaner = cleanObj([
   'name',
@@ -40,32 +45,6 @@ const cleanerUpdate = cleanObj([
   'museum',
   'type'
 ])
-const requiredFields = checkFields([
-  'name',
-  'movement',
-  'artist',
-  'yearCreated',
-  'museum'
-])
-const requiredFieldsArtist = checkFields(['born', 'name', 'movement'])
-const requiredFieldsArtistUpdate = checkFields([
-  '_id',
-  '_rev',
-  'born',
-  'name',
-  'movement',
-  'type'
-])
-const requiredFieldsUpdate = checkFields([
-  '_id',
-  '_rev',
-  'name',
-  'movement',
-  'artist',
-  'yearCreated',
-  'museum',
-  'type'
-])
 
 app.use(bodyParser.json())
 
@@ -77,11 +56,11 @@ app.get('/', function(req, res, next) {
 ////////////////////////////
 
 app.post('/paintings', (req, res, next) => {
-  if (not(isEmpty(requiredFields(req.body)))) {
+  if (not(isEmpty(addPaintingCheck(req.body)))) {
     next(
       new HTTPError(
         400,
-        `You are missing the required fields: ${requiredFields(req.body)}`
+        `You are missing the required fields: ${addPaintingCheck(req.body)}`
       )
     )
     return
@@ -99,11 +78,11 @@ app.get('/paintings/:id', (req, res, next) => {
 })
 
 app.put('/paintings/:id', (req, res, next) => {
-  if (not(isEmpty(requiredFieldsUpdate(req.body)))) {
+  if (not(isEmpty(updatePaintingCheck(req.body)))) {
     next(
       new HTTPError(
         400,
-        `You are missing the required fields: ${requiredFieldsUpdate(req.body)}`
+        `You are missing the required fields: ${updatePaintingCheck(req.body)}`
       )
     )
     return
@@ -125,11 +104,11 @@ app.delete('/paintings/:id', (req, res, next) => {
 /////////////////////////////////
 
 app.post('/artists', (req, res, next) => {
-  if (not(isEmpty(requiredFieldsArtist(req.body)))) {
+  if (not(isEmpty(addArtistCheck(req.body)))) {
     next(
       new HTTPError(
         400,
-        `You are missing the required fields: ${requiredFieldsArtist(req.body)}`
+        `You are missing the required fields: ${addArtistCheck(req.body)}`
       )
     )
     return
@@ -145,13 +124,11 @@ app.get('/artists/:id', (req, res, next) => {
     .catch(err => next(new HTTPError(err.status, err.message)))
 })
 app.put('/artists/:id', (req, res, next) => {
-  if (not(isEmpty(requiredFieldsArtistUpdate(req.body)))) {
+  if (not(isEmpty(updateArtistCheck(req.body)))) {
     next(
       new HTTPError(
         400,
-        `You are missing the required fields: ${requiredFieldsArtistUpdate(
-          req.body
-        )}`
+        `You are missing the required fields: ${updateArtistCheck(req.body)}`
       )
     )
     return
