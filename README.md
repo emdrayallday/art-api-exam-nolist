@@ -35,7 +35,7 @@ Your `.env` file should now look like this:
 PORT=4000
 COUCHDB_URL=https://as3gjaj46h1:36098adf243@account <--Use the key/secret that was generated and your database URL
 ```
-5. Load your data 
+5. Load the data 
  * There is a script that will load your database with already existing docs inside the `load-data` file.
  * To load the data type in the terminal `npm run load` while you are in the project directory
 6. Start the API 
