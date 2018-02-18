@@ -18,13 +18,13 @@ $ npm install
 
 2. Create a .env file
 
-Make sure you are in your project directory and add a file named `.env` and put a port variable with a value of 4000 inside of it like this:
+Make sure you are in your project directory and add a file named `.env` with a port variable and value of 4000:
 
 ```
 $ echo "PORT=4000" > .env
 ```
 
-Then open the file and put a COUCHDB_URL variable under the port which you will assign a value after creating the database. Your `.env` file should look like this:
+Open the file and put a COUCHDB_URL variable under the port which you will assign a value after creating the database. Your `.env` file should look like this:
 
 ```
 PORT=4000

@@ -16,4 +16,21 @@ const addPainting = painting => {
 const getPainting = id => db.get(id)
 const updatePainting = painting => db.put(painting)
 const deletePainting = id => db.get(id).then(painting => db.remove(painting))
-module.exports = { addPainting, getPainting, updatePainting, deletePainting }
+const addArtist = artist => {
+  artist._id = `artist_${slug(artist.name, { lower: true })}`
+  artist.type = 'artist'
+  return db.put(artist)
+}
+const getArtist = id => db.get(id)
+const updateArtist = artist => db.put(artist)
+const deleteArtist = id => db.get(id).then(artist => db.remove(artist))
+module.exports = {
+  addPainting,
+  getPainting,
+  updatePainting,
+  deletePainting,
+  addArtist,
+  getArtist,
+  updateArtist,
+  deleteArtist
+}

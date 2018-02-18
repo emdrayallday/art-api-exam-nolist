@@ -59,6 +59,48 @@ const paintings = [
     artist: 'Pierre-Auguste Renoires',
     yearCreated: 1876,
     museum: { name: 'Musée d’Orsay', location: 'Paris' }
+  },
+  {
+    _id: 'artist_vincent-van-gogh',
+    born: 1853,
+    movement: 'Post-Impressionism',
+    name: 'Vincent van Gogh',
+    type: 'artist'
+  },
+  {
+    _id: 'artist_claude-monet',
+    born: 1840,
+    movement: 'Impressionism',
+    name: 'Claude Monet',
+    type: 'artist'
+  },
+  {
+    _id: 'artist_leonardo-da-vinci',
+    born: 1452,
+    movement: 'High Renaissance',
+    name: 'Leonardo da Vinci',
+    type: 'artist'
+  },
+  {
+    _id: 'artist_georges-seurat',
+    born: 1859,
+    movement: 'Post-Impressionism, neo-impressionism, Pointillism',
+    name: 'Georges Seurat',
+    type: 'artist'
+  },
+  {
+    _id: 'artist_pablo-picasso',
+    born: 1881,
+    movement: 'Cubism, Surrealism',
+    name: 'Pablo Picasso',
+    type: 'artist'
+  },
+  {
+    _id: 'artist_pierre-auguste-renoires',
+    born: 1841,
+    movement: 'Impressionism',
+    name: 'Pierre-Auguste Renoires',
+    type: 'artist'
   }
 ]
 
