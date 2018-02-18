@@ -7,13 +7,10 @@ const port = process.env.PORT || 4000
 const { not, isEmpty } = require('ramda')
 const {
   addPainting,
-  getPainting,
-  updatePainting,
-  deletePainting,
   addArtist,
-  getArtist,
-  deleteArtist,
-  updateArtist
+  getDoc,
+  updateDoc,
+  deleteDoc
 } = require('./dal.js')
 const checkFields = require('./lib/required-fields.js')
 const cleanObj = require('./lib/removing-extra-fields.js')
@@ -96,7 +93,7 @@ app.post('/paintings', (req, res, next) => {
 })
 
 app.get('/paintings/:id', (req, res, next) => {
-  getPainting(req.params.id)
+  getDoc(req.params.id)
     .then(painting => res.send(painting))
     .catch(err => next(new HTTPError(err.status, err.message)))
 })
@@ -106,19 +103,19 @@ app.put('/paintings/:id', (req, res, next) => {
     next(
       new HTTPError(
         400,
-        `You are missing the required fields: ${requiredFields(req.body)}`
+        `You are missing the required fields: ${requiredFieldsUpdate(req.body)}`
       )
     )
     return
   } else {
-    return updatePainting(cleanerUpdate(req.body))
+    return updateDoc(cleanerUpdate(req.body))
       .then(newPainting => res.send(newPainting))
       .catch(err => next(new HTTPError(err.status, err.message)))
   }
 })
 
 app.delete('/paintings/:id', (req, res, next) => {
-  deletePainting(req.params.id)
+  deleteDoc(req.params.id)
     .then(delResult => res.send(delResult))
     .catch(err => next(new HTTPError(err.status, err.message)))
 })
@@ -143,7 +140,7 @@ app.post('/artists', (req, res, next) => {
   }
 })
 app.get('/artists/:id', (req, res, next) => {
-  getArtist(req.params.id)
+  getDoc(req.params.id)
     .then(artist => res.send(artist))
     .catch(err => next(new HTTPError(err.status, err.message)))
 })
@@ -158,13 +155,14 @@ app.put('/artists/:id', (req, res, next) => {
       )
     )
     return
+  } else {
+    return updateDoc(artCleanerUpdate(req.body))
+      .then(updatedResult => res.send(updatedResult))
+      .catch(err => next(new HTTPError(err.status, err.message)))
   }
-  updateArtist(artCleanerUpdate(req.body))
-    .then(updatedResult => res.send(updatedResult))
-    .catch(err => next(new HTTPError(err.status, err.message)))
 })
 app.delete('/artists/:id', (req, res, next) => {
-  deleteArtist(req.params.id)
+  deleteDoc(req.params.id)
     .then(delResult => res.send(delResult))
     .catch(err => next(new HTTPError(err.status, err.message)))
 })
