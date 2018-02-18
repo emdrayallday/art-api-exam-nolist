@@ -10,7 +10,8 @@ const {
   addArtist,
   getDoc,
   updateDoc,
-  deleteDoc
+  deleteDoc,
+  allDocs
 } = require('./dal.js')
 const {
   addPaintingCheck,
@@ -54,6 +55,15 @@ app.get('/', function(req, res, next) {
 ////////////////////////////
 ///////// Paintings
 ////////////////////////////
+app.get('/paintings', (req, res, next) => {
+  allDocs({
+    include_docs: true,
+    startkey: 'painting',
+    endkey: 'painting\ufff0'
+  })
+    .then(paintings => res.send(paintings))
+    .catch(err => next(new HTTPError(err.status, err.message)))
+})
 
 app.post('/paintings', (req, res, next) => {
   if (not(isEmpty(addPaintingCheck(req.body)))) {
@@ -102,6 +112,12 @@ app.delete('/paintings/:id', (req, res, next) => {
 /////////////////////////////////
 ///// Artists
 /////////////////////////////////
+
+app.get('/artists', (req, res, next) => {
+  allDocs({ include_docs: true, startkey: 'artist', endkey: 'artist\ufff0' })
+    .then(artists => res.send(artists))
+    .catch(err => next(new HTTPError(err.status, err.message)))
+})
 
 app.post('/artists', (req, res, next) => {
   if (not(isEmpty(addArtistCheck(req.body)))) {
