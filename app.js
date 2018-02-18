@@ -49,7 +49,7 @@ const requiredFieldsUpdate = checkFields([
 app.use(bodyParser.json())
 
 app.get('/', function(req, res, next) {
-  res.send('Welcome to the Art API. Manage all the paintings for much win.')
+  res.send(`<h1>Welcome to the MarkArt API</h1><br><br><p>Go explore!</p>`)
 })
 
 app.post('/paintings', (req, res, next) => {

@@ -16,15 +16,15 @@ $ cd art-api-exam-nolist
 $ npm install
 ```
 
-2. Create a `.env` file
+2. Create a .env file
 
-Add a file in your project directory named `.env` and put a port variable with a value of 4000 inside of it like this:
+Make sure you are in your project directory and add a file named `.env` and put a port variable with a value of 4000 inside of it like this:
 
 ```
 $ echo "PORT=4000" > .env
 ```
 
-Then open the file and put a COUCHDB_URL variable under the port which we will assign a value after creating the database. Your `.env` file should look like this:
+Then open the file and put a COUCHDB_URL variable under the port which you will assign a value after creating the database. Your `.env` file should look like this:
 
 ```
 PORT=4000
@@ -33,7 +33,7 @@ COUCHDB_URL=
 
 3. Create a database
 
-Using roo.land to add a database type `roo db add <dbname>` in your terminal:
+Using roo.land type this command in the terminal:
 
 ```
 $ roo db add <dbname>
@@ -48,33 +48,26 @@ COUCHDB_URL=https://<key>:<secret>@<url>
 EXAMPLE:
 
 ```
-COUCHDB_URL=https://as3g-jaj4-6h1:360-98ad-f243@<account>.roo.land/<dbname>
+COUCHDB_URL=https://as3g-jaj4-6h1:360-98ad-f243@accountname.roo.land/dbname
 ```
 
-Your `.env` file should now look like this:
+Your `.env` file should now look like this (make sure to use your own secret/key/url):
 
 ```
 PORT=4000
-COUCHDB_URL=https://as3g-jaj4-6h1:360-98ad-f243@<account>.roo.land/<dbname> <-- Use the key/secret that was generated and your database URL
+COUCHDB_URL=https://as3g-jaj4-6h1:360-98ad-f243@accountname.roo.land/dbname
 ```
 
-5. Load the data
+5. Load the data and start the API
 
 ```
 $ npm run load
-```
-
-6. Start the API
-
-```
 $ npm start
+
+MarkArt is running on port: 4000
 ```
 
-If successful there will be a message in the terminal saying:
-
-`MarkArt is running on port: 4000`
-
-7. Make your first GET call
+6. Make your first GET call
 
 In the browser type `http://localhost:4000/paintings`
 This will retrieve all of the paintings
