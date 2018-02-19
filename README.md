@@ -24,7 +24,7 @@ Make sure you are in your project directory and add a file named `.env` with a p
 $ echo "PORT=4000" > .env
 ```
 
-Open the file and put a COUCHDB_URL variable under the port which you will assign a value after creating the database. Your `.env` file should look like this:
+Open the project in your favorite text editor. Then open the `.env` file and put a COUCHDB_URL variable under the port which you will assign a value after creating the database. Your `.env` file should look like this:
 
 ```
 PORT=4000
@@ -87,9 +87,9 @@ http://localhost:4000/paintings?limit=10
 | API             |     ROUTE      |                  USE                   |
 | --------------- | :------------: | :------------------------------------: |
 | Paintings       |   /paintings   | Retrieve 5 paintings or add a painting |
-| Single Painting | /paintings/:id |     Retrieve or delete a painting      |
+| Single Painting | /paintings/:id | Retrieve, Update, or Delete a painting |
 | Artists         |    /artists    |  Retrieve 5 artists or add an artist   |
-| Single Artist   |  /artists/:id  |      Retrieve or remove an artist      |
+| Single Artist   |  /artists/:id  | Retrieve, Update,  or Delete an artist |
 
 ## Scheme
 
