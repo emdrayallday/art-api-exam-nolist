@@ -70,7 +70,13 @@ MarkArt is running on port: 4000
 6. Make your first GET call
 
 In the browser type `http://localhost:4000/paintings`
-This will retrieve all of the paintings
+This will retrieve 5 of the paintings. By default there is a limit of 5 to make loading easier. If you wish to see more add a query string with an increased limit.
+
+Example:
+
+```
+http://localhost:4000/paintings?limit=10
+```
 
 ## Basics
 
@@ -78,12 +84,12 @@ This will retrieve all of the paintings
 
 `http://localhost:4000/`: This is the home route that welcomes you to the api
 
-| API             |     ROUTE      |                   USE                    |
-| --------------- | :------------: | :--------------------------------------: |
-| Paintings       |   /paintings   | Retrieve all paintings or add a painting |
-| Single Painting | /paintings/:id |      Retrieve or delete a painting       |
-| Artists         |    /artists    |      Retrieve all or add an artist       |
-| Single Artists  |  /artists/:id  |       Retrieve or remove an artist       |
+| API             |     ROUTE      |                  USE                   |
+| --------------- | :------------: | :------------------------------------: |
+| Paintings       |   /paintings   | Retrieve 5 paintings or add a painting |
+| Single Painting | /paintings/:id |     Retrieve or delete a painting      |
+| Artists         |    /artists    |  Retrieve 5 artists or add an artist   |
+| Single Artist   |  /artists/:id  |      Retrieve or remove an artist      |
 
 ## Scheme
 
@@ -91,12 +97,12 @@ MarkArt communicates over HTTP
 
 ## HTTP Verbs
 
-| Verb   |          Description          |                                  Example                                   |
-| ------ | :---------------------------: | :------------------------------------------------------------------------: |
-| POST   |    Used to create new docs    |                     /paintings will add a new painting                     |
-| GET    |     Used to retrieve docs     | /paintings to retrieve all or /paintings/:id to retrieve a single painting |
-| PUT    | Used to update a specific doc |                /paintings/:id to update a specific painting                |
-| DELETE | Used to remove a specific doc |                /paintings/:id to remove a specific painting                |
+| Verb   |          Description          |                                      Example                                       |
+| ------ | :---------------------------: | :--------------------------------------------------------------------------------: |
+| POST   |    Used to create new docs    |                         /paintings will add a new painting                         |
+| GET    |     Used to retrieve docs     | /paintings to retrieve 5 paintings or /paintings/:id to retrieve a single painting |
+| PUT    | Used to update a specific doc |                    /paintings/:id to update a specific painting                    |
+| DELETE | Used to remove a specific doc |                    /paintings/:id to remove a specific painting                    |
 
 ## Content type
 
