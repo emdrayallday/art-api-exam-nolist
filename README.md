@@ -87,9 +87,9 @@ http://localhost:4000/paintings?limit=10
 | API             |     ROUTE      |                  USE                   |
 | --------------- | :------------: | :------------------------------------: |
 | Paintings       |   /paintings   | Retrieve 5 paintings or add a painting |
-| Single Painting | /paintings/:id |     Retrieve or delete a painting      |
+| Single Painting | /paintings/:id | Retrieve, Update, or delete a painting |
 | Artists         |    /artists    |  Retrieve 5 artists or add an artist   |
-| Single Artist   |  /artists/:id  |      Retrieve or remove an artist      |
+| Single Artist   |  /artists/:id  | Retrieve, Update,  or remove an artist |
 
 ## Scheme
 
