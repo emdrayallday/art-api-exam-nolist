@@ -24,7 +24,7 @@ Make sure you are in your project directory and add a file named `.env` with a p
 $ echo "PORT=4000" > .env
 ```
 
-Open the file and put a COUCHDB_URL variable under the port which you will assign a value after creating the database. Your `.env` file should look like this:
+Open your project in your favorite text editor. I will be using atom. Then open the `.env` file and put a COUCHDB_URL variable under the port which you will assign a value after creating the database. Your `.env` file should look like this:
 
 ```
 PORT=4000
