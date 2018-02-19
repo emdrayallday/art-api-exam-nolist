@@ -56,22 +56,29 @@ app.get('/', function(req, res, next) {
 ///////// Paintings
 ////////////////////////////
 app.get('/paintings', (req, res, next) => {
+  const caFilta = pathOr(null, ['query', 'filter'], req)
   if (pathOr(null, ['query', 'limit'], req)) {
-    return allDocs({
-      include_docs: true,
-      startkey: 'painting',
-      endkey: 'painting\ufff0',
-      limit: req.query.limit
-    })
+    return allDocs(
+      {
+        include_docs: true,
+        startkey: 'painting',
+        endkey: 'painting\ufff0',
+        limit: req.query.limit
+      },
+      caFilta
+    )
       .then(paintings => res.send(paintings))
       .catch(err => next(new HTTPError(err.status, err.message)))
   } else {
-    return allDocs({
-      include_docs: true,
-      startkey: 'painting',
-      endkey: 'painting\ufff0',
-      limit: 5
-    })
+    return allDocs(
+      {
+        include_docs: true,
+        startkey: 'painting',
+        endkey: 'painting\ufff0',
+        limit: 5
+      },
+      caFilta
+    )
       .then(paintings => res.send(paintings))
       .catch(err => next(new HTTPError(err.status, err.message)))
   }
@@ -126,23 +133,29 @@ app.delete('/paintings/:id', (req, res, next) => {
 /////////////////////////////////
 
 app.get('/artists', (req, res, next) => {
+  const caFilta = pathOr(null, ['query', 'filter'], req)
   if (pathOr(null, ['query', 'limit'], req)) {
-    console.log(req.query.limit)
-    return allDocs({
-      include_docs: true,
-      startkey: 'artist',
-      endkey: 'artist\ufff0',
-      limit: req.query.limit
-    })
+    return allDocs(
+      {
+        include_docs: true,
+        startkey: 'artist',
+        endkey: 'artist\ufff0',
+        limit: req.query.limit
+      },
+      caFilta
+    )
       .then(artists => res.send(artists))
       .catch(err => next(new HTTPError(err.status, err.message)))
   } else {
-    return allDocs({
-      include_docs: true,
-      startkey: 'artist',
-      endkey: 'artist\ufff0',
-      limit: 5
-    })
+    return allDocs(
+      {
+        include_docs: true,
+        startkey: 'artist',
+        endkey: 'artist\ufff0',
+        limit: 5
+      },
+      caFilta
+    )
       .then(artists => res.send(artists))
       .catch(err => next(new HTTPError(err.status, err.message)))
   }

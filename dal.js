@@ -3,7 +3,7 @@ const PouchDB = require('pouchdb-core')
 PouchDB.plugin(require('pouchdb-adapter-http'))
 PouchDB.plugin(require('pouchdb-find'))
 const db = new PouchDB(process.env.COUCHDB_URL)
-const { pluck, prop } = require('ramda')
+const { pluck, prop, compose, filter, head, last, split } = require('ramda')
 
 const idGen = require('./lib/pk-gen.js')
 
@@ -20,8 +20,21 @@ const addArtist = artist => {
 const getDoc = id => db.get(id)
 const updateDoc = doc => db.put(doc)
 const deleteDoc = id => db.get(id).then(doc => db.remove(doc))
-const allDocs = options =>
-  db.allDocs(options).then(docs => pluck('doc', docs.rows))
+const allDocs = (options, caFilta) => {
+  if (caFilta) {
+    const filterProp = head(split(':', caFilta))
+    const filterValue = last(split(':', caFilta))
+
+    const filterDocs = compose(
+      filter(doc => doc[filterProp] === filterValue),
+      pluck('doc')
+    )
+
+    return db.allDocs(options).then(response => filterDocs(response.rows))
+  } else {
+    return db.allDocs(options).then(docs => pluck('doc', docs.rows))
+  }
+}
 module.exports = {
   addPainting,
   addArtist,
