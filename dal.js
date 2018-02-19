@@ -24,13 +24,18 @@ const allDocs = (options, caFilta) => {
   if (caFilta) {
     const filterProp = head(split(':', caFilta))
     const filterValue = last(split(':', caFilta))
-
-    const filterDocs = compose(
-      filter(doc => doc[filterProp] === filterValue),
-      pluck('doc')
-    )
-
-    return db.allDocs(options).then(response => filterDocs(response.rows))
+    const caFiltaIndex = {
+      index: { fields: [filterProp, filterValue] }
+    }
+    const findIndex = {
+      selector: { [filterProp]: filterValue }
+    }
+    console.log(caFiltaIndex)
+    console.log(findIndex)
+    return db
+      .createIndex(caFiltaIndex)
+      .then(index => db.find(findIndex))
+      .then(obj => obj.docs)
   } else {
     return db.allDocs(options).then(docs => pluck('doc', docs.rows))
   }
